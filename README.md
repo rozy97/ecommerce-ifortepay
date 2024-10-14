@@ -4,7 +4,7 @@
 
 ___
 
-This is an API-only Ecommerce App for iFortepay Backend Technical test. This app build using Go and Postgres. The content of this documentation includes:
+This is an API-only Ecommerce App for iFortepay Backend Technical test. This app build using Go and MySQL. The content of this documentation includes:
 
 - How to run the application locally
 - How to manual test the API
@@ -45,3 +45,10 @@ go test -v ./... -cover
 ```
 
 ___
+
+<h3>
+    Entity Relationship Diagram
+</h3>
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/erd.png"/>
