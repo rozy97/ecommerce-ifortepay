@@ -2,7 +2,7 @@
     Ecommerce iFortepay
 </h1>
 
-<br/>
+___
 
 This is an API-only Ecommerce App for iFortepay Backend Technical test. This app build using Go and Postgres. The content of this documentation includes:
 
@@ -33,5 +33,15 @@ Open swagger UI at 123.123.123.123/docs or after run the app locally, access loc
 <p align="center">
 <img src="https://static1.smartbear.co/swagger/media/images/tools/opensource/swagger_ui.png"/>
 </p>
+
+___
+
+<h3>
+    How to run unit test
+</h3>
+
+```
+go test -v ./... -cover
+```
 
 ___
