@@ -2,7 +2,6 @@
     Ecommerce iFortepay
 </h1>
 
-___
 
 This is an API-only Ecommerce App for iFortepay Backend Technical test. This app build using Go and MySQL. The content of this documentation includes:
 
@@ -52,3 +51,11 @@ ___
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/erd.png"/>
+
+<h3>
+    Sequence Diagram
+</h3>
+
+Register Feature
+<p align="center">
+<img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/register.png"/>

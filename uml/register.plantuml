@@ -1,0 +1,37 @@
+@startuml register
+
+API -> UserHandler: POST /register\n{email,password}
+activate UserHandler
+UserHandler -> UserUsecase: register(email, password)
+activate UserUsecase
+UserUsecase -> UserRepo: GetUserByEmail()
+activate UserRepo
+database DB
+UserRepo -> DB:SELECT COUNT(id)\nFROM users\nWHERE email = ?
+activate DB
+UserRepo <-- DB
+deactivate DB
+UserUsecase <-- UserRepo
+deactivate UserRepo
+alt user already exist
+UserHandler <-- UserUsecase: error user already exist
+API <-- UserHandler: 400
+end
+UserUsecase -> UserRepo:CreateUser()
+activate UserRepo
+UserRepo -> DB:INSERT INTO users
+activate DB
+UserRepo <-- DB
+deactivate DB
+UserUsecase <-- UserRepo
+deactivate UserRepo
+alt error while create user
+UserHandler <-- UserUsecase:error insert user
+API <-- UserHandler:500
+end
+UserHandler <-- UserUsecase:success
+deactivate UserUsecase
+API <-- UserHandler:200
+deactivate UserHandler
+
+@enduml
