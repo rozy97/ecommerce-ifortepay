@@ -29,6 +29,11 @@ func main() {
 	// middleware := middleware.NewMiddleware(env)
 
 	app := fiber.New()
+
+	app.Get("/test", func(c *fiber.Ctx) error {
+		return c.JSON(map[string]string{"message": "Welcome to ifortepay ecommerce API"})
+	})
+
 	userRoutes := app.Group("/user")
 	userRoutes.Post("/register", userHandler.Register)
 	userRoutes.Post("/login", userHandler.Login)
