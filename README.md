@@ -39,8 +39,14 @@ ___
     How to run unit test
 </h3>
 
+using go command:
 ```
 go test -v ./... -cover
+```
+
+using docker:
+```
+docker build -t ecommerce-ifortepay-test --progress plain --no-cache --target test-stage .
 ```
 
 ___
@@ -61,7 +67,9 @@ ___
 
 <p align="center">
 Register Feature
-<img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/register.png"/>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/register.png"/>
+</p>
 </p>
 
 <br/>
