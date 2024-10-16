@@ -51,11 +51,17 @@ ___
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/erd.png"/>
+</p>
+
+___
 
 <h3>
     Sequence Diagram
 </h3>
 
-Register Feature
 <p align="center">
+Register Feature
 <img src="https://raw.githubusercontent.com/rozy97/ecommerce-ifortepay/refs/heads/main/assets/register.png"/>
+</p>
+
+<br/>

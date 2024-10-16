@@ -9,15 +9,17 @@ import (
 type Environment struct {
 	AppPort        string
 	SecretPassword string
-	MysqlURI       string
+	SecretKey      string
+	PostgresURL    string
 }
 
-func InitEnvironment() Environment {
+func InitEnvironment() *Environment {
 	godotenv.Load()
 
-	return Environment{
+	return &Environment{
 		AppPort:        os.Getenv("APP_PORT"),
 		SecretPassword: os.Getenv("SECRET_PASSWORD"),
-		MysqlURI:       os.Getenv("MYSQL_URI"),
+		SecretKey:      os.Getenv("SECRET_KEY"),
+		PostgresURL:    os.Getenv("POSTGRES_URL"),
 	}
 }

@@ -20,9 +20,9 @@ func Test_Register(t *testing.T) {
 	ctx := context.Background()
 	email := "john@mail.com"
 	password := "12345"
-	request := request.Register{Email: email, Password: password}
+	request := &request.Register{Email: email, Password: password}
 
-	env := config.Environment{
+	env := &config.Environment{
 		SecretPassword: "secret",
 	}
 
@@ -59,7 +59,7 @@ func Test_Register(t *testing.T) {
 			CreatedAt: currentTime.UTC(),
 			UpdatedAt: currentTime.UTC(),
 			DeletedAt: nil,
-		}).Return(fmt.Errorf("%s", expectedErrorMessage)).Once()
+		}).Return(0, fmt.Errorf("%s", expectedErrorMessage)).Once()
 		result, err := usecase.Register(ctx, request)
 
 		assert.Nil(t, result)
@@ -76,7 +76,7 @@ func Test_Register(t *testing.T) {
 			CreatedAt: currentTime.UTC(),
 			UpdatedAt: currentTime.UTC(),
 			DeletedAt: nil,
-		}).Return(nil).Once()
+		}).Return(1, nil).Once()
 		_, err := usecase.Register(ctx, request)
 
 		assert.Nil(t, err)
