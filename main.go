@@ -30,7 +30,7 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	app.Get("/test", func(c *fiber.Ctx) error {
 		return c.JSON(map[string]string{"message": "Welcome to ifortepay ecommerce API"})
 	})
 
