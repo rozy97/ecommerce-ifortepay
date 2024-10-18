@@ -20,6 +20,12 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	defer db.Close()
 
 	userRepository := repository.NewUserRepository(db)
