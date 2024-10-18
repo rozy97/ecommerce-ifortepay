@@ -1,3 +1,5 @@
 *.env
 *.out
-migration/data/*
+migration/data
+secrets
+letsencrypt
