@@ -14,5 +14,6 @@ RUN go test -v ./... -cover
 FROM golang:1.23.1-alpine AS run-stage
 WORKDIR /app
 COPY --from=build-stage /main /main
+COPY .env .env
 EXPOSE 8080
 ENTRYPOINT ["/main"]

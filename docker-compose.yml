@@ -1,41 +1,18 @@
 version: '3.9'
 
 services:
-  reverse-proxy:
-    image: traefik:v3.1
-    command:
-      - "--providers.docker"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entryPoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=rozy.firmansyah@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock
   backend:
     build:
       context: .
       dockerfile: Dockerfile
       target: run-stage
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`rozy.dev`)"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.tls.certresolver=myresolver"
     environment:
       - APP_PORT=5001
       - POSTGRES_URL_FILE=/run/secrets/postgres-url
-      - SECRET_PASSWORD=s3cr3t
-      - SECRET_KEY=s3cr3tk3y
+      - SECRET_PASSWORD_FILE=/run/secrets/secret-password
+      - SECRET_KEY_FILE=/run/secrets/secret-key
     ports:
-      - 5001:5001
+      - 5000:5000
     volumes:
       - ./:/app
     networks:
@@ -47,6 +24,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+    restart: always
 
 volumes:
   letsencrypt:
