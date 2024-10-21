@@ -44,18 +44,18 @@ func main() {
 	v1.Post("/register", userHandler.Register)
 	v1.Post("/login", userHandler.Login)
 
-	v1.Get("/product")             // get list products
-	v1.Get("/product/:product_id") // get product detail
+	v1.Get("/product", func(c *fiber.Ctx) error { panic("implement me") })             // get list products
+	v1.Get("/product/:product_id", func(c *fiber.Ctx) error { panic("implement me") }) // get product detail
 
-	v1.Post("/wishlist") // add product to wishlist
-	v1.Get("/wishlist")  // get list wishlist
+	v1.Post("/wishlist", func(c *fiber.Ctx) error { panic("implement me") }) // add product to wishlist
+	v1.Get("/wishlist", func(c *fiber.Ctx) error { panic("implement me") })  // get list wishlist
 
-	v1.Post("/cart") // add product to cart
-	v1.Get("/cart")  // get list cart item
+	v1.Post("/cart", func(c *fiber.Ctx) error { panic("implement me") }) // add product to cart
+	v1.Get("/cart", func(c *fiber.Ctx) error { panic("implement me") })  // get list cart item
 
-	v1.Post("/order")          // create order
-	v1.Get("/order")           // get list order
-	v1.Get("/order/:order_id") // get order detail
+	v1.Post("/order", func(c *fiber.Ctx) error { panic("implement me") })          // create order
+	v1.Get("/order", func(c *fiber.Ctx) error { panic("implement me") })           // get list order
+	v1.Get("/order/:order_id", func(c *fiber.Ctx) error { panic("implement me") }) // get order detail
 
 	err = app.Listen(fmt.Sprintf(":%s", env.AppPort))
 	if err != nil {
