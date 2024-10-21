@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/rozy97/ecommerce-ifortepay/request"
+	"github.com/rozy97/ecommerce-ifortepay/response"
 )
 
 func (uh *UserHandler) Register(c *fiber.Ctx) error {
@@ -33,7 +34,12 @@ func (uh *UserHandler) Login(c *fiber.Ctx) error {
 
 	resp, err := uh.uu.Login(c.Context(), payload)
 	if err != nil {
-		return err
+		switch err {
+		case response.ErrEmailAlreadyRegistered:
+			return c.Status(http.StatusBadRequest).JSON(resp)
+		default:
+			return err
+		}
 	}
 
 	return c.Status(http.StatusOK).JSON(resp)

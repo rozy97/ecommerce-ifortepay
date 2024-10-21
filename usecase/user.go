@@ -22,7 +22,7 @@ func (u *UserUsecase) Register(ctx context.Context, req *request.Register) (*res
 		return &response.Register{
 			Code:    response.ErrCodeEmailAlreadyRegistered,
 			Message: response.ErrMessageEmailAlreadyRegistered,
-		}, nil
+		}, response.ErrEmailAlreadyRegistered
 	}
 
 	currentTimeUTC := u.clock.Now().UTC()
