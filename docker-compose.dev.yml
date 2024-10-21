@@ -7,7 +7,8 @@ services:
       - 5432:5432
     volumes:
       - ./migration/data:/var/lib/postgresql/data
-      - ./migration/schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./migration/schema.sql:/docker-entrypoint-initdb.d/01.sql
+      - ./migration/seed.sql:/docker-entrypoint-initdb.d/02.sql
     environment:
       - POSTGRES_PASSWORD=S3cret
       - POSTGRES_USER=ecommerce-ifortepay-user
