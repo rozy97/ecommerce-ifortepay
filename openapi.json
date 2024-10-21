@@ -24,7 +24,7 @@
     }
   ],
   "paths": {
-    "/user/register": {
+    "/v1/register": {
       "post": {
         "tags": [
           "user"
