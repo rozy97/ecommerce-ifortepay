@@ -35,14 +35,28 @@ func main() {
 	// middleware := middleware.NewMiddleware(env)
 
 	app := fiber.New()
+	v1 := app.Group("/v1")
 
-	app.Get("/test", func(c *fiber.Ctx) error {
+	v1.Get("/test", func(c *fiber.Ctx) error {
 		return c.JSON(map[string]string{"message": "Welcome to ifortepay ecommerce API"})
 	})
 
-	userRoutes := app.Group("/user")
-	userRoutes.Post("/register", userHandler.Register)
-	userRoutes.Post("/login", userHandler.Login)
+	v1.Post("/register", userHandler.Register)
+	v1.Post("/login", userHandler.Login)
+
+	v1.Get("/product")             // get list products
+	v1.Get("/product/:product_id") // get product detail
+
+	v1.Post("/wishlist") // add product to wishlist
+	v1.Get("/wishlist")  // get list wishlist
+
+	v1.Post("/cart") // add product to cart
+	v1.Get("/cart")  // get list cart item
+
+	v1.Post("/order")          // create order
+	v1.Get("/order")           // get list order
+	v1.Get("/order/:order_id") // get order detail
+
 	err = app.Listen(fmt.Sprintf(":%s", env.AppPort))
 	if err != nil {
 		log.Fatalln(err)
