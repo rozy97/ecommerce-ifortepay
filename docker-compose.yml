@@ -9,6 +9,8 @@ services:
       - POSTGRES_URL_FILE=/run/secrets/postgres-url
       - SECRET_PASSWORD_FILE=/run/secrets/secret-password
       - SECRET_KEY_FILE=/run/secrets/secret-key
+      - MAX_OPEN_CONNECTION=2
+      - MAX_IDLE_CONNECTION=2
     ports:
       - 5000:5000
     volumes:
@@ -23,6 +25,15 @@ services:
       mode: replicated
       replicas: 1
     restart: always
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "5001:8080"
+    volumes:
+      - ./openapi.json:/openapi.json
+    environment:
+      SWAGGER_JSON: /openapi.json
 
 volumes:
   letsencrypt:
