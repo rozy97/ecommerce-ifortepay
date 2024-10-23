@@ -15,21 +15,32 @@
   "servers": [
     {
       "url": "https://ecommerce-ifortepay-api.rozy.dev"
+    },
+    {
+      "url": "http://localhost:5000"
     }
   ],
   "tags": [
     {
       "name": "user",
       "description": "Operations about user"
+    },
+    {
+      "name": "cart",
+      "description": "Operations about cart"
+    },
+    {
+      "name": "order",
+      "description": "Operations about order"
     }
   ],
   "paths": {
-    "/user/register": {
+    "/v1/register": {
       "post": {
         "tags": [
           "user"
         ],
-        "summary": "Logs user into the system",
+        "summary": "User Registration API",
         "description": "",
         "operationId": "registerUser",
         "requestBody": {
@@ -56,6 +67,283 @@
           },
           "400": {
             "description": "Email Already Registered"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User doesn't exist or incorrect password"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/cart": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Get list Product in Cart",
+        "description": "",
+        "operationId": "getCartUser",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": false
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            },
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "Add Product to Cart",
+        "description": "",
+        "operationId": "addCartUser",
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCartPayload"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddCartResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/order": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Get list Order",
+        "description": "",
+        "operationId": "getOrderUser",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "required": false
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            },
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Create Order",
+        "description": "",
+        "operationId": "CreateOrderUser",
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderPayload"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/order/{orderId}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Get list Product inside the Order",
+        "description": "",
+        "operationId": "getOrderItemUser",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrderDetailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -95,25 +383,201 @@
             "example": "register success"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
+      },
+      "LoginPayload": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "R@nd0mS3cureP4ssw0rd"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "format": "text",
+            "example": "this is access token value"
+          }
+        }
+      },
+      "GetCartResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            },
+            "product": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1
+                },
+                "sku": {
+                  "type": "string",
+                  "example": "SKU123"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Macbook Pro"
+                },
+                "price": {
+                  "type": "number",
+                  "format": "float64",
+                  "example": 5499.99
+                }
+              }
             }
           }
         }
       },
-      "api_key": {
+      "AddCartResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "format": "text",
+            "example": "add product to cart success"
+          }
+        }
+      },
+      "AddCartPayload": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 3
+          }
+        }
+      },
+      "GetOrderResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            },
+            "amount": {
+              "type": "number",
+              "format": "float64",
+              "example": 12345.67
+            }
+          }
+        }
+      },
+      "GetOrderDetailResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            },
+            "product": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1
+                },
+                "sku": {
+                  "type": "string",
+                  "example": "SKU123"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Macbook Pro"
+                },
+                "price": {
+                  "type": "number",
+                  "format": "float64",
+                  "example": 5499.99
+                }
+              }
+            }
+          }
+        }
+      },
+      "CreateOrderResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "format": "text",
+            "example": "create order success"
+          }
+        }
+      },
+      "CreateOrderPayload": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "product_id": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32",
+              "example": 3
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
         "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
+        "in": "header",
+        "name": "access_token"
       }
     }
   }

@@ -23,12 +23,15 @@ services:
       - POSTGRES_URL=postgresql://ecommerce-ifortepay-user:S3cret@postgres:5432/ecommerce_ifortepay_db?sslmode=disable
       - SECRET_PASSWORD=s3cr3t
       - SECRET_KEY=s3cr3tk3y
+      - MAX_OPEN_CONNECTION=2
+      - MAX_IDLE_CONNECTION=2
     ports:
       - 5001:5001
     depends_on:
       - postgres
     volumes:
       - ./:/app
+    restart: always
     networks:
       - ecommerce-ifortepay
 

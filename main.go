@@ -16,16 +16,9 @@ import (
 
 func main() {
 	env := config.InitEnvironment()
-	db, err := sqlx.Open("postgres", env.PostgresURL)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = db.Ping()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
+	db := sqlx.MustConnect("postgres", env.PostgresURL)
+	db.SetMaxOpenConns(env.MaxOpenConnection)
+	db.SetMaxIdleConns(env.MaxIdleConnection)
 	defer db.Close()
 
 	userRepository := repository.NewUserRepository(db)
@@ -57,7 +50,7 @@ func main() {
 	v1.Get("/order", func(c *fiber.Ctx) error { panic("implement me") })           // get list order
 	v1.Get("/order/:order_id", func(c *fiber.Ctx) error { panic("implement me") }) // get order detail
 
-	err = app.Listen(fmt.Sprintf(":%s", env.AppPort))
+	err := app.Listen(fmt.Sprintf(":%s", env.AppPort))
 	if err != nil {
 		log.Fatalln(err)
 	}
